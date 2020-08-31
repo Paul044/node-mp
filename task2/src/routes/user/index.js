@@ -23,41 +23,43 @@ router
             res.json(user);
         }
     })
-    .put(validators.userWithId, (req, res) => {
-        const { id: userId } = req.params;
-        const storedUser = getUserById(userId);
-        if (!storedUser) {
-            res.status(404).json({
-                message: `User with id ${userId} not found. Update failed`
-            });
-        }
-        if (userId !== storedUser.id) {
-            res.status(500).json({
-                message: 'Inconsistent data, check userId'
-            });
-        }
-        const user = req.body;
-        updateUser(user);
-        res.json({
-            message: `User with id ${userId} updated`
-        });
-    })
     .delete((req, res) => {
         const { id: userId } = req.params;
-        deleteUser(userId);
+        const user = getUserById(userId);
+        if (!user) {
+            res.status(404).json({
+                message: `User with id ${userId} not found`
+            });
+        } else {
+            deleteUser(userId);
+            res.json({
+                message: `User with id ${userId} deleted`
+            });
+        }
+    });
+
+router
+    .route('/')
+    .put(validators.userWithId, (req, res) => {
+        const user = req.body;
+        const storedUser = getUserById(user.id);
+        if (!storedUser) {
+            res.status(404).json({
+                message: `User with id ${user.id} not found. Update failed`
+            });
+        }
+        updateUser(user);
         res.json({
-            message: `User with id ${userId} deleted`
+            message: `User with id ${user.id} updated`
+        });
+    })
+    .post(validators.user, (req, res) => {
+        const userData = req.body;
+        const createdUser = createUser(userData);
+        res.json({
+            message: `User with id ${createdUser.id} created`,
+            data: createdUser
         });
     });
-
-router.put('/', validators.user, (req, res) => {
-    const userData = req.body;
-    const createdUser = createUser(userData);
-
-    res.json({
-        message: `User with id ${createdUser.id} created`,
-        data: createdUser
-    });
-});
 
 export default router;

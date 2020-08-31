@@ -3,28 +3,28 @@ import { v4 as uuid } from 'uuid';
 import { getCompareFunctionByProperty } from './helpers';
 
 const usersMap = {
-    '111': {
+    111: {
         id: '111',
         login: 'cccca',
         password: 'ds-111-password',
         age: 12,
         isDeleted: false
     },
-    '112': {
+    112: {
         id: '112',
         login: 'aaaaa',
         password: 'ds-112-password',
         age: 12,
         isDeleted: false
     },
-    '113': {
+    113: {
         id: '113',
         login: 'dddda',
         password: 'ds-113-password',
         age: 12,
         isDeleted: false
     },
-    '114': {
+    114: {
         id: '114',
         login: 'bbbba',
         password: 'ds-114-password',
@@ -50,7 +50,7 @@ export function createUser(user) {
 
 export function updateUser(user) {
     const userId = user.id;
-    usersMap[userId] = user;
+    usersMap[userId] = { ...user, isDeleted: false };
     return user;
 }
 

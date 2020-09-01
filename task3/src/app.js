@@ -2,9 +2,10 @@ import express from 'express';
 
 import userRouter from './routes/user';
 import autoSuggestRouter from './routes/autoSuggest';
+import config from './config';
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = config.PORT || 3001;
 
 app.listen(port);
 app.use(express.json());

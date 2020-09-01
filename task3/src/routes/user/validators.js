@@ -10,12 +10,17 @@ const userSchema = joi.object({
 });
 
 const userWithIdSchema = userSchema.keys({
-    id: joi.string().required()
+    id: joi.string().guid().required()
+});
+
+const uuidSchema = joi.object({
+    id: joi.string().guid().required()
 });
 
 const validators = {
     user: validator.body(userSchema),
-    userWithId: validator.body(userWithIdSchema)
+    userWithId: validator.body(userWithIdSchema),
+    uuid: validator.params(uuidSchema)
 };
 
 export default validators;

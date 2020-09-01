@@ -1,65 +1,87 @@
 import express from 'express';
 
-import {
-    getUserById,
-    updateUser,
-    deleteUser,
-    createUser
-} from '../../usersData';
 import validators from './validators';
+import UserService from '../../services/userService';
+import { UserModel } from '../../models';
 
+const userService = new UserService(UserModel);
 const router = express.Router();
 
 router
     .route('/:id')
-    .get((req, res) => {
-        const { id: userId } = req.params;
-        const user = getUserById(userId);
-        if (!user) {
-            res.status(404).json({
-                message: `User with id ${userId} not found`
+    .get(validators.uuid, async (req, res) => {
+        try {
+            const { id: userId } = req.params;
+            const user = await userService.getById(userId);
+            if (!user) {
+                res.status(404).json({
+                    message: `User with id ${userId} not found`
+                });
+            } else {
+                res.json(user);
+            }
+        } catch (err) {
+            res.status(err.status || 500).json({
+                message: err
             });
-        } else {
-            res.json(user);
         }
     })
-    .delete((req, res) => {
-        const { id: userId } = req.params;
-        const user = getUserById(userId);
-        if (!user) {
-            res.status(404).json({
-                message: `User with id ${userId} not found`
-            });
-        } else {
-            deleteUser(userId);
-            res.json({
-                message: `User with id ${userId} deleted`
+    .delete(validators.uuid, async (req, res) => {
+        try {
+            const { id: userId } = req.params;
+            const user = await userService.getById(userId);
+            if (!user) {
+                res.status(404).json({
+                    message: `User with id ${userId} not found`
+                });
+            } else {
+                await userService.delete(userId);
+                res.json({
+                    message: `User with id ${userId} deleted`
+                });
+            }
+        } catch (err) {
+            res.status(err.status || 500).json({
+                message: err
             });
         }
     });
 
 router
     .route('/')
-    .put(validators.userWithId, (req, res) => {
-        const user = req.body;
-        const storedUser = getUserById(user.id);
-        if (!storedUser) {
-            res.status(404).json({
-                message: `User with id ${user.id} not found. Update failed`
+    .put(validators.userWithId, async (req, res) => {
+        try {
+            const user = req.body;
+            // Is it OK to call userService.getById in this put route ?
+            const storedUser = await userService.getById(user.id);
+            if (!storedUser) {
+                res.status(404).json({
+                    message: `User with id ${user.id} not found. Update failed`
+                });
+            }
+            await userService.update(user);
+            res.json({
+                message: `User with id ${user.id} updated`
+            });
+        } catch (err) {
+            res.status(err.status || 500).json({
+                message: err
             });
         }
-        updateUser(user);
-        res.json({
-            message: `User with id ${user.id} updated`
-        });
     })
-    .post(validators.user, (req, res) => {
-        const userData = req.body;
-        const createdUser = createUser(userData);
-        res.json({
-            message: `User with id ${createdUser.id} created`,
-            data: createdUser
-        });
+    .post(validators.user, async (req, res) => {
+        try {
+            const userData = req.body;
+            const createdUser = await userService.create(userData);
+            res.json({
+                message: `User with id ${createdUser.id} created`,
+                data: createdUser
+            });
+        } catch (err) {
+            res.status(err.status || 500).json({
+                message: err
+            });
+        }
     });
 
 export default router;

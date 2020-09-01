@@ -8,11 +8,11 @@
 		{
 			"name": "create user",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"login\": \"ssssa\", \"age\": 13, \"password\":\"sds\"}",
+					"raw": "{ \"login\": \"sssa2\", \"age\": 11, \"password\":\"pwd\"}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,13 +20,13 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3001/user",
+					"raw": "localhost:3001/users",
 					"host": [
 						"localhost"
 					],
 					"port": "3001",
 					"path": [
-						"user"
+						"users"
 					]
 				}
 			},
@@ -50,22 +50,22 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"id\": \"ds-31\", \"login\": \"Sss\", \"age\": 13, \"password\":\"sds\"}",
+					"raw": "{\"id\": \"42433025-3081-4cfd-af91-78d67f7684f6\", \"login\": \"Sss\", \"age\": 13, \"password\":\"sds\"}",
 					"options": {
 						"raw": {
-							"language": "javascript"
+							"language": "json"
 						}
 					}
 				},
 				"url": {
-					"raw": "localhost:3001/user/111",
+					"raw": "localhost:3001/users/",
 					"host": [
 						"localhost"
 					],
 					"port": "3001",
 					"path": [
-						"user",
-						"111"
+						"users",
+						""
 					]
 				}
 			},
@@ -77,14 +77,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/user/111",
+					"raw": "localhost:3001/users/d13475f6-5f56-45b2-a459-83fa2fac408a",
 					"host": [
 						"localhost"
 					],
 					"port": "3001",
 					"path": [
-						"user",
-						"111"
+						"users",
+						"d13475f6-5f56-45b2-a459-83fa2fac408a"
 					]
 				}
 			},
@@ -96,19 +96,18 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/users/getAutoSuggestUsers?limit=12&loginSubstring=a",
+					"raw": "localhost:3001/getAutoSuggestUsers?limit=11&loginSubstring=a",
 					"host": [
 						"localhost"
 					],
 					"port": "3001",
 					"path": [
-						"users",
 						"getAutoSuggestUsers"
 					],
 					"query": [
 						{
 							"key": "limit",
-							"value": "12"
+							"value": "11"
 						},
 						{
 							"key": "loginSubstring",
@@ -125,14 +124,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/user/111",
+					"raw": "localhost:3001/users/d13475f6-5f56-45b2-a459-83fa2fac408a",
 					"host": [
 						"localhost"
 					],
 					"port": "3001",
 					"path": [
-						"user",
-						"111"
+						"users",
+						"d13475f6-5f56-45b2-a459-83fa2fac408a"
 					]
 				}
 			},

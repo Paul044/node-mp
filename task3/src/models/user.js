@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import { v4 as uuid } from 'uuid';
+import { Model, DataTypes, literal } from 'sequelize';
+import sequelizeInstance from '../data-access';
 
 export default class User extends Model {
     static init(sequelize) {
@@ -7,7 +7,7 @@ export default class User extends Model {
             {
                 id: {
                     type: DataTypes.UUID,
-                    defaultValue: DataTypes.UUIDV4,
+                    defaultValue: literal('uuid_generate_v4()'),
                     allowNull: false,
                     unique: true,
                     primaryKey: true
@@ -25,11 +25,6 @@ export default class User extends Model {
                 }
             },
             {
-                hooks: {
-                    beforeCreate: (user) => {
-                        user.id = uuid();
-                    }
-                },
                 tableName: 'users',
                 sequelize,
                 paranoid: true
@@ -37,3 +32,5 @@ export default class User extends Model {
         );
     }
 }
+
+User.init(sequelizeInstance);

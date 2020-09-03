@@ -5,28 +5,29 @@ export default class UserService {
         this.model = model;
     }
 
-    async create(userItem) {
+    create(userItem) {
         try {
-            const data = await this.model.create(userItem);
+            const data = this.model.create(userItem);
             return data;
         } catch (err) {
             throw err;
         }
     }
 
-    async update(userItem) {
+    update(userItem) {
         try {
-            const item = await this.model.findByPk(userItem.id);
-            const updatedItem = await item.update(userItem);
+            const updatedItem = this.model
+                .findByPk(userItem.id)
+                .then((item) => item.update(userItem));
             return updatedItem;
         } catch (err) {
             throw err;
         }
     }
 
-    async delete(userId) {
+    delete(userId) {
         try {
-            const deletedItem = await this.model.destroy({
+            const deletedItem = this.model.destroy({
                 where: {
                     id: userId
                 }
@@ -37,24 +38,22 @@ export default class UserService {
         }
     }
 
-    async getById(userId) {
+    getById(userId) {
         try {
-            const data = await this.model.findByPk(userId, { paranoid: false });
+            const data = this.model.findByPk(userId, { paranoid: false });
             return data;
         } catch (err) {
             throw err;
         }
     }
 
-    async getFilteredSliceOfUsers(limit, loginSubstring) {
+    getFilteredSliceOfUsers(limit, loginSubstring) {
         try {
-            const data = await this.model.findAll({
+            const data = this.model.findAll({
                 where: {
                     [Op.and]: [{ login: { [Op.substring]: loginSubstring } }]
                 },
-                order: [
-                    ['login', 'ASC']
-                ],
+                order: [['login', 'ASC']],
                 limit
             });
             return data;

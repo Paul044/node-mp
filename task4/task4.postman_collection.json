@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "b1027c92-aa17-4e39-a1c7-bb4c0fd7792f",
+		"name": "Node task2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"login\": \"sssa2\", \"age\": 11, \"password\":\"pwd\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/users",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\": \"42433025-3081-4cfd-af91-78d67f7684f6\", \"login\": \"Sss\", \"age\": 13, \"password\":\"sds\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/users/",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/users/c8b38840-6903-4985-877f-0bd1d4d1349c",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users",
+						"c8b38840-6903-4985-877f-0bd1d4d1349c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAutoSuggestUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/getAutoSuggestUsers?limit=11&loginSubstring=a",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"getAutoSuggestUsers"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "11"
+						},
+						{
+							"key": "loginSubstring",
+							"value": "a"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/users/180f2cfd-cd5c-4584-819d-12ab0ebe6b22",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users",
+						"180f2cfd-cd5c-4584-819d-12ab0ebe6b22"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllGroup",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/groups/",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"groups",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create group",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\": \"1122\", \"permissions\": [\"DELETE\", \"READ\"] }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/groups",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get groupById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/groups/943dfc0c-552b-4085-95d2-cef9a97b2be3",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"groups",
+						"943dfc0c-552b-4085-95d2-cef9a97b2be3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update group",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\": \"01c8fa69-f33a-44a1-a775-f46275f2a73c\", \"name\": \"Sss\", \"permissions\" : [\"READ\"]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/groups/",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"groups",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete group",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/groups/16f93497-7f55-443c-b209-8d713893c5c6",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"groups",
+						"16f93497-7f55-443c-b209-8d713893c5c6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addUsersToGroup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"groupId\": \"d376ca1a-4a69-47c5-b611-37b523826510\", \"userIds\": [ \"180f2cfd-cd5c-4584-819d-12ab0ebe6b22\", \"f8377723-e849-4743-af7e-3556816673af\"] }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/userGroup/addUsersToGroup",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"userGroup",
+						"addUsersToGroup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all UserGroups",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/userGroup",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"userGroup"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

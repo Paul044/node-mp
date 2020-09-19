@@ -2,9 +2,9 @@ import express from 'express';
 
 import validators from './validators';
 import UserService from '../../services/userService';
-import { UserModel } from '../../models';
+import db from '../../models';
 
-const userService = new UserService(UserModel);
+const userService = new UserService(db);
 const router = express.Router();
 
 router

@@ -1,5 +1,4 @@
 import { Model, DataTypes, literal } from 'sequelize';
-import sequelizeInstance from '../data-access';
 
 export default class User extends Model {
     static init(sequelize) {
@@ -31,6 +30,15 @@ export default class User extends Model {
             }
         );
     }
-}
 
-User.init(sequelizeInstance);
+    static associate(models) {
+        this.belongsToMany(models.Group, {
+            through: models.UserGroup,
+            as: 'groups',
+            foreignKey: 'userId',
+            otherKey: 'groupId',
+            onDelete: 'CASCADE',
+            hooks: true
+        });
+    }
+}

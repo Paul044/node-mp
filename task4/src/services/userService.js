@@ -1,8 +1,11 @@
 import { Op } from 'sequelize';
+import sequelize from '../data-access';
 
 export default class UserService {
-    constructor(model) {
-        this.model = model;
+    constructor(models) {
+        this.model = models.User;
+        this.userGroupsModel = models.UserGroup;
+        this.groupModel = models.Group;
     }
 
     create(userItem) {
@@ -27,12 +30,25 @@ export default class UserService {
 
     delete(userId) {
         try {
-            const deletedItem = this.model.destroy({
-                where: {
-                    id: userId
-                }
+            // As user table supports soft delete (paranoid: true), we have to delete linked entity from UserGroups table
+            sequelize.transaction((t) => {
+                this.userGroupsModel.destroy(
+                    {
+                        where: {
+                            userId
+                        }
+                    },
+                    { transaction: t }
+                );
+                return this.model.destroy(
+                    {
+                        where: {
+                            id: userId
+                        }
+                    },
+                    { transaction: t }
+                );
             });
-            return deletedItem;
         } catch (err) {
             throw err;
         }
@@ -54,7 +70,16 @@ export default class UserService {
                     [Op.and]: [{ login: { [Op.substring]: loginSubstring } }]
                 },
                 order: [['login', 'ASC']],
-                limit
+                limit,
+                include: [
+                    {
+                        model: this.groupModel,
+                        as: 'groups',
+                        required: false,
+                        attributes: ['id', 'name'],
+                        through: { attributes: [] }
+                    }
+                ]
             });
             return data;
         } catch (err) {

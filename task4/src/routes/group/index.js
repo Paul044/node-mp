@@ -27,17 +27,17 @@ router
     .delete(async (req, res) => {
         try {
             const { id: groupId } = req.params;
-            const group = await groupService.getById(groupId);
-            if (!group) {
-                res.status(404).json({
-                    message: `Group with id ${groupId} not found`
-                });
-            } else {
-                await groupService.delete(groupId);
-                res.json({
-                    message: `Group with id ${groupId} deleted`
-                });
-            }
+            // const group = await groupService.getById(groupId);
+            // if (!group) {
+            //     res.status(404).json({
+            //         message: `Group with id ${groupId} not found`
+            //     });
+            // } else {
+            await groupService.delete(groupId);
+            res.json({
+                message: `Group with id ${groupId} deleted`
+            });
+            // }
         } catch (err) {
             res.status(err.status || 500).json({
                 message: err
@@ -49,13 +49,13 @@ router
     .route('/')
     .get(async (req, res) => {
         try {
-            const Group = await groupService.getAllGroups();
-            if (!Group) {
+            const group = await groupService.getAllGroups();
+            if (!group) {
                 res.status(404).json({
                     message: 'No groups found'
                 });
             } else {
-                res.json(Group);
+                res.json(group);
             }
         } catch (err) {
             res.status(err.status || 500).json({

@@ -4,12 +4,15 @@ import validators from './validators';
 import UserService from '../../services/userService';
 import db from '../../models';
 
+import { apiLoggerMiddleware as loggerMiddleware } from '../../utils/logger';
+
 const userService = new UserService(db);
 const router = express.Router();
 
 router.get(
     '/getAutoSuggestUsers',
     validators.getAutoSuggestUsersQuery,
+    loggerMiddleware,
     async (req, res) => {
         try {
             const { limit, loginSubstring } = req.query;

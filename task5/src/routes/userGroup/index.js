@@ -1,12 +1,13 @@
 import express from 'express';
 import UserGroupService from '../../services/userGroupService';
 import db from '../../models';
+import { apiLoggerMiddleware as loggerMiddleware } from '../../utils/logger';
 
 const router = express.Router();
 
 const userGroupService = new UserGroupService(db);
 
-router.route('/').get(async (req, res) => {
+router.route('/').get(loggerMiddleware, async (req, res) => {
     try {
         const userGroups = await userGroupService.getAllUserGroups();
         res.json({
@@ -19,7 +20,7 @@ router.route('/').get(async (req, res) => {
     }
 });
 
-router.route('/addUsersToGroup').post(async (req, res) => {
+router.route('/addUsersToGroup').post(loggerMiddleware, async (req, res) => {
     try {
         const data = req.body;
 

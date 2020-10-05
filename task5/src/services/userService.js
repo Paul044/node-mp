@@ -1,5 +1,6 @@
 import { Op } from 'sequelize';
 import sequelize from '../data-access';
+import { serviceLoggerDecorator } from '../utils/logger';
 
 export default class UserService {
     constructor(models) {
@@ -54,6 +55,7 @@ export default class UserService {
         }
     }
 
+    @serviceLoggerDecorator
     getById(userId) {
         try {
             const data = this.model.findByPk(userId, { paranoid: false });

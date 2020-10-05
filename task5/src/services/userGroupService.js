@@ -1,4 +1,5 @@
 import sequelize from '../data-access';
+import logger from '../utils/logger';
 
 export default class GroupService {
     constructor(models) {
@@ -32,12 +33,13 @@ export default class GroupService {
                     );
                     return Promise.all(promises);
                 })
-                .then(() => console.log('LOG:: Succeeded transaction'))
-                .catch(() => {
-                    console.log('LOG:: Failed transaction');
+                .then(() => logger.info('Succeeded transaction'))
+                .catch((err) => {
+                    logger.error(err);
                     throw new Error('Failed transaction for adding userGroups');
                 });
         } catch (err) {
+            logger.error(err);
             // This validation doesn't work somehow, check by AddUserToGroup same items several times
             throw err;
         }

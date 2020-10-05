@@ -1,13 +1,14 @@
 import express from 'express';
 import GroupService from '../../services/groupService';
 import db from '../../models';
+import { apiLoggerMiddleware as loggerMiddleware } from '../../utils/logger';
 
 const router = express.Router();
 const groupService = new GroupService(db);
 
 router
     .route('/:id')
-    .get(async (req, res) => {
+    .get(loggerMiddleware, async (req, res) => {
         try {
             const { id: groupId } = req.params;
             const group = await groupService.getById(groupId);
@@ -24,7 +25,7 @@ router
             });
         }
     })
-    .delete(async (req, res) => {
+    .delete(loggerMiddleware, async (req, res) => {
         try {
             const { id: groupId } = req.params;
             // const group = await groupService.getById(groupId);
@@ -47,7 +48,7 @@ router
 
 router
     .route('/')
-    .get(async (req, res) => {
+    .get(loggerMiddleware, async (req, res) => {
         try {
             const group = await groupService.getAllGroups();
             if (!group) {
@@ -63,7 +64,7 @@ router
             });
         }
     })
-    .post(async (req, res) => {
+    .post(loggerMiddleware, async (req, res) => {
         try {
             const groupData = req.body;
             const createdUser = await groupService.create(groupData);
@@ -77,7 +78,7 @@ router
             });
         }
     })
-    .put(async (req, res) => {
+    .put(loggerMiddleware, async (req, res) => {
         try {
             const group = req.body;
             const storedUser = await groupService.getById(group.id);

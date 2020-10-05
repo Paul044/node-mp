@@ -3,13 +3,14 @@ import express from 'express';
 import validators from './validators';
 import UserService from '../../services/userService';
 import db from '../../models';
+import { apiLoggerMiddleware as loggerMiddleware } from '../../utils/logger';
 
 const userService = new UserService(db);
 const router = express.Router();
 
 router
     .route('/:id')
-    .get(validators.uuid, async (req, res) => {
+    .get(validators.uuid, loggerMiddleware, async (req, res) => {
         try {
             const { id: userId } = req.params;
             const user = await userService.getById(userId);
@@ -26,7 +27,7 @@ router
             });
         }
     })
-    .delete(validators.uuid, async (req, res) => {
+    .delete(validators.uuid, loggerMiddleware, async (req, res) => {
         try {
             const { id: userId } = req.params;
             const user = await userService.getById(userId);
@@ -49,7 +50,7 @@ router
 
 router
     .route('/')
-    .put(validators.userWithId, async (req, res) => {
+    .put(validators.userWithId, loggerMiddleware, async (req, res) => {
         try {
             const user = req.body;
             // Is it OK to call userService.getById in this put route ?
@@ -69,7 +70,7 @@ router
             });
         }
     })
-    .post(validators.user, async (req, res) => {
+    .post(validators.user, loggerMiddleware,  async (req, res) => {
         try {
             const userData = req.body;
             const createdUser = await userService.create(userData);

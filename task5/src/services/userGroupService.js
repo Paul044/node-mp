@@ -1,5 +1,4 @@
 import sequelize from '../data-access';
-import logger from '../utils/logger';
 
 export default class GroupService {
     constructor(models) {
@@ -7,41 +6,29 @@ export default class GroupService {
     }
 
     getAllUserGroups() {
-        try {
-            const data = this.model.findAll({});
-            return data;
-        } catch (err) {
-            throw err;
-        }
+        return this.model.findAll({});
     }
 
     addUsersToGroup(data) {
-        try {
-            const { groupId, userIds } = data;
+        const { groupId, userIds } = data;
 
-            sequelize
-                .transaction((t) => {
-                    const promises = [];
-                    userIds.forEach((userId) =>
-                        promises.push(
-                            this.model
-                                .create({ userId, groupId }, { transaction: t })
-                                .catch((err) => {
-                                    throw err;
-                                })
-                        )
-                    );
-                    return Promise.all(promises);
-                })
-                .then(() => logger.info('Succeeded transaction'))
-                .catch((err) => {
-                    logger.error(err);
-                    throw new Error('Failed transaction for adding userGroups');
-                });
-        } catch (err) {
-            logger.error(err);
-            // This validation doesn't work somehow, check by AddUserToGroup same items several times
-            throw err;
-        }
+        return sequelize.transaction((t) => {
+            const promises = [];
+            userIds.forEach((userId) =>
+                promises.push(
+                    this.model.create({ userId, groupId }, { transaction: t }).catch((err) => {
+                        throw err;
+                    })
+                )
+            );
+            return Promise.all(promises);
+        });
+
+        // Removing catch here, so sequelize error could be handled in generic error handler
+        // .then(() => logger.info('Succeeded transaction'))
+        // .catch((err) => {
+        //     logger.error(err);
+        //     throw new Error('Failed transaction for adding userGroups');
+        // });
     }
 }

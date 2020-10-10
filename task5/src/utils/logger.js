@@ -1,8 +1,8 @@
 import winston, { format } from 'winston';
 const { combine, timestamp, colorize, printf } = format;
 
-const printFormat = printf(({ level, message, timestamp }) => {
-    return `[${timestamp}] ${level}: ${message}`;
+const printFormat = printf(({ level, message, time }) => {
+    return `[${time}] ${level}: ${message}`;
 });
 
 const logger = winston.createLogger({
@@ -21,12 +21,14 @@ export const apiLoggerMiddleware = (req, res, next) => {
     next();
 };
 
-
 export function serviceLoggerDecorator(target, name, descriptor) {
     const original = descriptor.value;
     if (typeof original === 'function') {
+        // eslint-disable-next-line func-names
         descriptor.value = function (...args) {
-            logger.info(`service:: ${(target.constructor.name)} method:: ${name} args:: ${args}`);
+            logger.info(
+                `service:: ${target.constructor.name} method:: ${name} args:: ${args}`
+            );
             try {
                 const result = original.apply(this, args);
                 return result;

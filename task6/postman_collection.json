@@ -74,6 +74,16 @@
 		{
 			"name": "get user",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhc2hhIiwidXNlcmlkIjoiMDJmZjNjYTQtYjAwNi00NDkxLTk0MTktMzA1ODRkMjkyZmQxIiwiaWF0IjoxNjAyNDg1OTAyLCJleHAiOjE2MDI0ODc3MDJ9.Zbf9Lfd38Nla9sE9C0pMV17ScIr3zxgFE5GBIHXBqzk",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -247,14 +257,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/groups/16f93497-7f55-443c-b209-8d713893c5c6",
+					"raw": "localhost:3001/groups/56ab35a7-c8b5-498b-a1ae-c089edcf8baa",
 					"host": [
 						"localhost"
 					],
 					"port": "3001",
 					"path": [
 						"groups",
-						"16f93497-7f55-443c-b209-8d713893c5c6"
+						"56ab35a7-c8b5-498b-a1ae-c089edcf8baa"
 					]
 				}
 			},
@@ -267,7 +277,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"groupId\": \"d376ca1a-4a69-47c5-b611-37b523826510\", \"userIds\": [ \"180f2cfd-cd5c-4584-819d-12ab0ebe6b22\", \"f8377723-e849-4743-af7e-3556816673af\"] }",
+					"raw": "{ \"groupId\": \"d376ca1a-4a69-47c5-b611-37b523826510\", \"userIds\": [ \"dd9902e4-9c68-45c3-b1dc-51211b18ad7c\", \"9dd886c6-33bd-40bd-89c9-80b124e51039\"] }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -301,6 +311,39 @@
 					"port": "3001",
 					"path": [
 						"userGroup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://sss.com",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"pasha\",\r\n    \"password\": \"pwd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"login"
 					]
 				}
 			},

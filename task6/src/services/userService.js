@@ -64,4 +64,13 @@ export default class UserService {
             ]
         });
     }
+
+    getUserByNameAndPassword(username, password) {
+        return this.model.findOne({
+            where: {
+                [Op.and]: [{ login: username, password }]
+            },
+            raw: true
+        }, { paranoid: false });
+    }
 }

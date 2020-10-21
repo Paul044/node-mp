@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import logger from '../utils/logger';
 
 const sequelize = new Sequelize(
     process.env.DATABASE_NAME,
@@ -8,17 +9,17 @@ const sequelize = new Sequelize(
         host: process.env.DATABASE_HOST,
         port: process.env.DATABASE_PORT,
         dialect: process.env.DATABASE_DIALECT,
-        logging: console.log
+        logging: false
     }
 );
 
 sequelize
     .authenticate()
     .then(() => {
-        console.log('Connection has been established successfully.');
+        logger.info('Connection has been established successfully.');
     })
     .catch((err) => {
-        console.log('Unable to connect to the database:', err);
+        logger.error('Unable to connect to the database:', err);
     });
 
 export default sequelize;

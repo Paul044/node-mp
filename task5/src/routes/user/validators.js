@@ -1,7 +1,7 @@
 import joi from '@hapi/joi';
 import joiValidator from 'express-joi-validation';
 
-const validator = joiValidator.createValidator({});
+const validator = joiValidator.createValidator({ passError: true }); // We're passing errors to nex middleware to handle all errors same way
 
 const userSchema = joi.object({
     login: joi.string().required(),

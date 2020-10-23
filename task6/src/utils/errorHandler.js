@@ -41,8 +41,8 @@ export const handleError = (err, res) => {
 export const errorHandlerMiddleware = (err, req, res, next) => {
     handleError(err, res);
     logger.error(
-        `${err.origin.methodName} | args:: ${JSON.stringify(
-            err.origin.arguments
+        `${err.origin?.methodName} | args:: ${JSON.stringify(
+            err.origin?.arguments
         )} | ${err.message || err}`
     );
 };

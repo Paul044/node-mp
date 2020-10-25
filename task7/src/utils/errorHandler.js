@@ -47,7 +47,7 @@ export const errorHandlerMiddleware = (err, req, res, next) => {
     );
 };
 
-export const populateErrorWithHadledFields = (err, req) => ({
+export const populateErrorWithHandledFields = (err, req) => ({
     ...err,
     origin: { methodName: req.baseUrl + req.route.path, arguments: { params: req.params, query: req.query, body: req.body } }
 });
